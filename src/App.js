@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+
+import { ThemeProvider } from "styled-components";
+import Burger from "./components/Burger/Burger";
+import { useOnClickOutside } from "./components/hooks";
+import Menu from "./components/Menu/Menu";
+import { GlobalStyles } from "./globaj";
+import { theme } from "./theme";
+
+// import { Burger, Menu } from "./components";
 
 function App() {
+  const [open, setOpen] = useState(false);
+  const node = useRef();
+  useOnClickOutside(node, () => setOpen(false));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyles />
+        <div>
+          <h1>Hello. This is burger menu tutorial</h1>
+        </div>
+
+        <div ref={node}>
+          <Burger open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen} />
+        </div>
+      </>
+    </ThemeProvider>
   );
 }
-
 export default App;
